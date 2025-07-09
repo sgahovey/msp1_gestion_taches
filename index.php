@@ -45,7 +45,9 @@ $taches = getAllTaches($pdo);
     <td><?= date("d/m/Y", strtotime($tache['date_limite'])) ?></td>
     <td><?= $tache['terminee'] ? "✅ Terminée" : "🕒 En cours" ?></td>
     <td>
-    <a href="update.php?id=<?= $tache['id'] ?>" class="btn btn-sm btn-warning" data-fancybox data-type="ajax">✏️</a>
+<a href="update.php?id=<?= $tache['id'] ?>" class="btn btn-sm btn-warning" data-fancybox data-type="iframe">
+    ✏️
+</a>
     <a href="delete.php?id=<?= $tache['id'] ?>" class="btn btn-sm btn-danger" data-fancybox data-type="ajax">🗑️</a>
     </td>
     </tr>
