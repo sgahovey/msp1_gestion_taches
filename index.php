@@ -48,7 +48,9 @@ $taches = getAllTaches($pdo);
 <a href="update.php?id=<?= $tache['id'] ?>" class="btn btn-sm btn-warning" data-fancybox data-type="iframe">
     ✏️
 </a>
-    <a href="delete.php?id=<?= $tache['id'] ?>" class="btn btn-sm btn-danger" data-fancybox data-type="ajax">🗑️</a>
+<a href="delete.php?id=<?= $tache['id'] ?>" class="btn btn-sm btn-danger" data-fancybox data-type="iframe">
+    🗑️
+</a>
     </td>
     </tr>
     <?php endforeach; ?>
