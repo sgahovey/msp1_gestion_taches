@@ -12,10 +12,12 @@ function getTacheById(PDO $pdo, int $id): ?array {
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function addTache(PDO $pdo, string $titre, string $description, string $priorite, string $date_limite): bool {
-    $stmt = $pdo->prepare("INSERT INTO taches (titre, description, priorite, date_limite) VALUES (?, ?, ?, ?)");
-    return $stmt->execute([$titre, $description, $priorite, $date_limite]);
+function addTache(PDO $pdo, string $titre, string $description, string $priorite, string $date_limite, int $terminee = 0): bool {
+    $stmt = $pdo->prepare("INSERT INTO taches (titre, description, priorite, date_limite, terminee) VALUES (?, ?, ?, ?, ?)");
+    return $stmt->execute([$titre, $description, $priorite, $date_limite, $terminee]);
 }
+
+
 
 function updateTache(PDO $pdo, int $id, string $titre, string $description, string $priorite, string $date_limite, bool $terminee): bool {
     $stmt = $pdo->prepare("UPDATE taches SET titre=?, description=?, priorite=?, date_limite=?, terminee=? WHERE id=?");
@@ -28,20 +30,5 @@ function deleteTache(PDO $pdo, int $id): bool {
 }
 
 
-function processAddTache(PDO $pdo): ?string {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $titre = $_POST['titre'] ?? '';
-        $description = $_POST['description'] ?? '';
-        $priorite = $_POST['priorite'] ?? 'Normale';
-        $date_limite = $_POST['date_limite'] ?? null;
 
-        if (addTache($pdo, $titre, $description, $priorite, $date_limite)) {
-            echo "<script>window.parent.location.reload();</script>";
-            exit;
-        } else {
-            return "❌ Erreur lors de l'ajout.";
-        }
-    }
 
-    return null;
-}

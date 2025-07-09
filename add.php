@@ -1,9 +1,5 @@
 <?php
-require_once("lib/bdd.php");
-require_once("lib/crud.php");
-require_once("lib/fonctions.php");
-
-$message = processAddTache($pdo);
+require_once("lib/ui.php");
 ?>
 
 <!DOCTYPE html>
@@ -11,16 +7,11 @@ $message = processAddTache($pdo);
 <head>
     <meta charset="UTF-8">
     <title>Ajouter une tâche</title>
-    <?php require_once("lib/ui.php"); ?>
 </head>
 <body class="p-3">
     <h4 class="mb-3">➕ Nouvelle tâche</h4>
 
-    <?php if ($message): ?>
-        <div class="alert alert-danger"><?= $message ?></div>
-    <?php endif; ?>
-
-    <form method="post">
+    <form id="formAdd" method="post">
         <div class="mb-3">
             <label class="form-label">Titre</label>
             <input type="text" name="titre" class="form-control" required>
@@ -31,7 +22,14 @@ $message = processAddTache($pdo);
             <textarea name="description" class="form-control" rows="3"></textarea>
         </div>
 
-        <?php selectPriorite(); ?>
+        <div class="mb-3">
+            <label class="form-label">Priorité</label>
+            <select name="priorite" class="form-select">
+                <option value="Basse">🟢 Basse</option>
+                <option value="Normale" selected>🟡 Normale</option>
+                <option value="Haute">🔴 Haute</option>
+            </select>
+        </div>
 
         <div class="mb-3">
             <label class="form-label">Date limite</label>

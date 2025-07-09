@@ -19,3 +19,7 @@
     });
   });
 </script>
+
+
+<!-- Ton JS pour les formulaires -->
+<script src="js/add.js"></script>

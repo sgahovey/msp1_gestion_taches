@@ -18,7 +18,11 @@ $taches = getAllTaches($pdo);
 <h1 class="mb-4 text-center">📋 Gestion des Tâches</h1>
 
 <div class="text-end mb-3">
-<a href="add.php" class="btn btn-primary" data-fancybox data-type="ajax">➕ Ajouter une tâche</a>
+<a href="add.php" class="btn btn-primary" data-fancybox data-type="iframe">
+    ➕ Ajouter une tâche
+</a>
+
+
 </div>
 
 <table class="table table-bordered table-striped">
