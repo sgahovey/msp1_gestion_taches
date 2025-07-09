@@ -91,9 +91,10 @@ if ($prioriteFiltre) {
     <input type="checkbox" class="form-check-input toggle-terminee" 
         data-id="<?= $tache['id'] ?>" <?= $tache['terminee'] ? 'checked' : '' ?>>
 
-    <span class="etat-label ms-2">
-        <?= $tache['terminee'] ? "✅ Terminée" : "🕒 En cours" ?>
-    </span>
+<span class="etat-label ms-2 <?= $tache['terminee'] ? 'text-success' : 'text-warning' ?>">
+    <?= $tache['terminee'] ? "✅ Terminée" : "🕒 En cours" ?>
+</span>
+
 </td>
 
         <td>
@@ -128,6 +129,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 else {
     const label = checkbox.parentElement.querySelector(".etat-label");
     label.textContent = checkbox.checked ? "✅ Terminée" : "🕒 En cours";
+    label.classList.remove("text-success", "text-warning");
+label.classList.add(checkbox.checked ? "text-success" : "text-warning");
+
 }
 
             });
