@@ -2,7 +2,15 @@
 require_once("lib/bdd.php");
 require_once("lib/crud.php");
 
-$taches = getAllTaches($pdo);
+$prioriteFiltre = $_GET['priorite'] ?? null;
+
+if ($prioriteFiltre) {
+    $stmt = $pdo->prepare("SELECT * FROM taches WHERE priorite = ? ORDER BY date_creation DESC");
+    $stmt->execute([$prioriteFiltre]);
+    $taches = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    $taches = getAllTaches($pdo);
+}
 ?>
 
 <!DOCTYPE html>
@@ -24,6 +32,19 @@ $taches = getAllTaches($pdo);
 
 
 </div>
+
+<form method="get" class="mb-3 d-flex justify-content-end">
+    <select name="priorite" class="form-select w-auto me-2" onchange="this.form.submit()">
+        <option value="">🎯 Filtrer par priorité</option>
+        <option value="Basse" <?= ($prioriteFiltre === 'Basse') ? 'selected' : '' ?>>🟢 Basse</option>
+        <option value="Normale" <?= ($prioriteFiltre === 'Normale') ? 'selected' : '' ?>>🟡 Normale</option>
+        <option value="Haute" <?= ($prioriteFiltre === 'Haute') ? 'selected' : '' ?>>🔴 Haute</option>
+    </select>
+    <?php if ($prioriteFiltre): ?>
+        <a href="index.php" class="btn btn-outline-secondary">🔄 Réinitialiser</a>
+    <?php endif; ?>
+</form>
+
 
 <table class="table table-bordered table-striped">
 <thead class="table-dark">
