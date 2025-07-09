@@ -87,7 +87,10 @@ if ($prioriteFiltre) {
         <td><?= nl2br(htmlspecialchars($tache['description'])) ?></td>
         <td><?= htmlspecialchars($tache['priorite']) ?></td>
         <td><?= date("d/m/Y", strtotime($tache['date_limite'])) ?></td>
-        <td><?= $tache['terminee'] ? "✅ Terminée" : "🕒 En cours" ?></td>
+<td class="text-center">
+    <input type="checkbox" class="form-check-input toggle-terminee"
+        data-id="<?= $tache['id'] ?>" <?= $tache['terminee'] ? 'checked' : '' ?>>
+</td>
         <td>
         <a href="update.php?id=<?= $tache['id'] ?>" class="btn btn-sm btn-warning" data-fancybox data-type="iframe">
         ✏️
