@@ -88,9 +88,14 @@ if ($prioriteFiltre) {
         <td><?= htmlspecialchars($tache['priorite']) ?></td>
         <td><?= date("d/m/Y", strtotime($tache['date_limite'])) ?></td>
 <td class="text-center">
-    <input type="checkbox" class="form-check-input toggle-terminee"
+    <input type="checkbox" class="form-check-input toggle-terminee" 
         data-id="<?= $tache['id'] ?>" <?= $tache['terminee'] ? 'checked' : '' ?>>
+
+    <span class="etat-label ms-2">
+        <?= $tache['terminee'] ? "✅ Terminée" : "🕒 En cours" ?>
+    </span>
 </td>
+
         <td>
         <a href="update.php?id=<?= $tache['id'] ?>" class="btn btn-sm btn-warning" data-fancybox data-type="iframe">
         ✏️
@@ -105,6 +110,32 @@ if ($prioriteFiltre) {
         </table>
         </div>
         
+        <script>
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".toggle-terminee").forEach(checkbox => {
+        checkbox.addEventListener("change", () => {
+            const id = checkbox.dataset.id;
+            const terminee = checkbox.checked ? 1 : 0;
+
+            fetch("toggle_statut.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: `id=${id}&terminee=${terminee}`
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (!data.success) alert("❌ Erreur lors de la mise à jour.");
+                else {
+    const label = checkbox.parentElement.querySelector(".etat-label");
+    label.textContent = checkbox.checked ? "✅ Terminée" : "🕒 En cours";
+}
+
+            });
+        });
+    });
+});
+</script>
+
         </body>
         </html>
         
