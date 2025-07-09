@@ -1,21 +1,8 @@
 <?php
 require_once("lib/bdd.php");
-require_once("lib/crud.php");
 
-$order_by = $_GET['order_by'] ?? 'date_creation';
-$order_dir = strtolower($_GET['order_dir'] ?? 'desc');
-$order_dir = $order_dir === 'asc' ? 'asc' : 'desc'; // sécurité
+$taches = require_once("lib/taches_filter.php");
 
-$prioriteFiltre = $_GET['priorite'] ?? null;
-
-if ($prioriteFiltre) {
-    $stmt = $pdo->prepare("SELECT * FROM taches WHERE priorite = ? ORDER BY $order_by $order_dir");
-    $stmt->execute([$prioriteFiltre]);
-    $taches = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} else {
-    $stmt = $pdo->query("SELECT * FROM taches ORDER BY $order_by $order_dir");
-    $taches = $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
 
 ?>
 
@@ -62,6 +49,16 @@ if ($prioriteFiltre) {
     <?php endif; ?>
     </form>
     
+    <form method="get" class="mb-3 d-flex justify-content-end align-items-center">
+    <label class="me-2">Filtrer par état :</label>
+    <select name="filtre" class="form-select w-auto me-2" onchange="this.form.submit()">
+        <option value="">-- Tous --</option>
+        <option value="0" <?= isset($_GET['filtre']) && $_GET['filtre'] === '0' ? 'selected' : '' ?>>🕒 En cours</option>
+        <option value="1" <?= isset($_GET['filtre']) && $_GET['filtre'] === '1' ? 'selected' : '' ?>>✅ Terminée</option>
+    </select>
+</form>
+
+
     
     <table class="table table-bordered table-striped">
     <thead class="table-dark">
