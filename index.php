@@ -1,5 +1,8 @@
 <?php
 require_once("lib/bdd.php");
+require_once("lib/crud.php");
+
+$taches = getAllTaches($pdo);
 ?>
 
 <!DOCTYPE html>
@@ -17,12 +20,6 @@ require_once("lib/bdd.php");
     <div class="text-end mb-3">
         <a href="ajout.php" class="btn btn-primary" data-fancybox data-type="ajax">➕ Ajouter une tâche</a>
     </div>
-
-    <?php
-    $sql = "SELECT * FROM taches ORDER BY date_creation DESC";
-    $stmt = $pdo->query($sql);
-    $taches = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    ?>
 
     <table class="table table-bordered table-striped">
         <thead class="table-dark">
@@ -42,13 +39,16 @@ require_once("lib/bdd.php");
                 <td><?= nl2br(htmlspecialchars($tache['description'])) ?></td>
                 <td><?= htmlspecialchars($tache['priorite']) ?></td>
                 <td><?= htmlspecialchars($tache['date_limite']) ?></td>
+                <td><?= $tache['terminee'] ? "✅ Terminée" : "🕒 En cours" ?></td>
                 <td>
-                    <?= $tache['terminee'] ? "✅ Terminée" : "🕒 En cours" ?>
-                </td>
-                <td>
-                    <a href="editer.php?id=<?= $tache['id'] ?>" class="btn btn-sm btn-warning" data-fancybox data-type="ajax">✏️</a>
-                    <a href="supprimer.php?id=<?= $tache['id'] ?>" class="btn btn-sm btn-danger" data-fancybox data-type="ajax">🗑️</a>
+                    <a href="update.php?id=<?= $tache['id'] ?>" class="btn btn-sm btn-warning" data-fancybox data-type="ajax">✏️</a>
+                    <a href="delete.php?id=<?= $tache['id'] ?>" class="btn btn-sm btn-danger" data-fancybox data-type="ajax">🗑️</a>
                 </td>
             </tr>
         <?php endforeach; ?>
-        </t
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
